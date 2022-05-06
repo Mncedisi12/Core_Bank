@@ -1,0 +1,84 @@
+*{
+    box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+/*main body*/
+body{
+    background-color: rgb(255, 255, 255);
+
+}
+
+/*main header*/
+.main-page-header{
+    padding: 10px 0px;
+}
+/*company name*/
+.main-page-header .company-name{
+    font-weight: 600;
+    color: white;
+    
+}
+/*navigation*/
+.navigation{
+    /* border: 1px solid white; */
+    margin-left: 20px;
+    color: white;
+}
+.navigation li{
+    display: inline-block;
+    list-style-type: none;
+    margin: 0px 15px;
+}
+
+.navigation li a{
+    color: white;
+    text-decoration: none;
+}
+
+.display-name{
+    font-weight: 600;
+}
+
+/* transact button */
+ #transact-btn{
+    background-color: #e49c0b;
+    border: 1px solid #d69107;
+
+}
+
+#add-account-btn{
+    border:1px solid rgb(153, 41, 41);
+    background-color: rgb(180, 42, 42);
+    color: white;
+
+}
+
+/* Offcanvas Background  */
+.offcanvas{
+    background-image: url("../images/images (9).jpeg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.transact-btn{
+    border:1px solid rgb(153, 41, 41);
+    background-color: rgb(180, 42, 42);
+    color: white;
+
+}
+/* payment-card */
+.payment-card{
+  display: none;
+}
+
+.transfer-card  {
+    display: none;
+  }
+
+  .deposit-card{
+    display: none;
+  }
+
+  .withdraw-card{
+    display: none;
+  }
