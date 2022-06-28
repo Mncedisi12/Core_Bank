@@ -24,6 +24,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT * FROM users WHERE email = :email",nativeQuery = true)
     User getUserDetails(@Param("email")String email);
 
+//    User findUserByEmail(String email);
     @Modifying
     @Query(value = "INSERT INTO users (first_name, last_name, id_number, email, password, token, code) VALUES " +
             "(:first_name, :last_name, :id_number, :email,:password, :token, :code)", nativeQuery = true )

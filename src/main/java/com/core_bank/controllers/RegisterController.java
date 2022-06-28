@@ -66,6 +66,8 @@ public class RegisterController {
 
 
 
+
+
         //TODO: GET TOKEN STRING
         String token = Token.generateToken();
 

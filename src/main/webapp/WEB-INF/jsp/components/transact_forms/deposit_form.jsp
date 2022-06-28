@@ -9,7 +9,7 @@
 
                 <!-- Deposit Form -->
 
-                <form action="/transact/deposit " method="post" class="deposit-form">
+                <form action="/transact/deposit " method="POST" class="deposit-form">
                     <!-- Form Group -->
                     <div class="form-group mb-2 ">
                         <label for=""> Enter Deposit Amount</label>
@@ -23,7 +23,7 @@
                     <div class="form-group mb-2">
                         <label for="">Select Account</label>
                         <select name="account_id" class="form-control " id="">
-                            <option value="">-- Select Account --</option>
+                            <option value=""> Select Account --</option>
                             <c:if test="${userAccounts != null}">
                                 <c:forEach items="${userAccounts}" var="selectAccount">
                                     <option value="${selectAccount.account_id}">${selectAccount.account_name}</option>

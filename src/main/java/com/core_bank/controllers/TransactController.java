@@ -6,9 +6,11 @@ import com.core_bank.repository.PaymentRepository;
 import com.core_bank.repository.TransactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -159,67 +161,73 @@ public class TransactController {
     // End of Transfer Method
 
 
-    @PostMapping("/withdraw")
-    public String withdraw(@RequestParam("withdrawal_amount")String withdrawalAmount,
-                           @RequestParam("account-id")String accountID,
-                           HttpSession session,
-                           RedirectAttributes redirectAttributes){
+        @PostMapping("/withdraw")
+        public String withdraw(@RequestParam("withdrawal_amount")String withdrawalAmount,
+                @RequestParam("account_id")String accountID,
+                HttpSession session,
+                RedirectAttributes redirectAttributes){
 
         String errorMsg;
 
-        //TODO: CHECK EMPTY VALUES:
-        if (withdrawalAmount.isEmpty() || accountID.isEmpty()){
+            //TODO: CHECK EMPTY STRINGS:
+            if (withdrawalAmount.isEmpty() || accountID.isEmpty()){
+                redirectAttributes.addFlashAttribute("error","  Withdrawal Amount or Account ID Cannot Be Empty");
+                return "redirect/app/dashboard";
+            }
 
-            errorMsg  = "withdrawal Amount and Account Withdrawing From Cannot Be Empty ";
-            redirectAttributes.addFlashAttribute("error",errorMsg);
-            return "redirect/app/dashboard";
-        }
+            //TODO: GET LOGGED IN USER:
+            user =(User)session.getAttribute("user");
 
-        //TODO: CONVERT VARIABLES:
-        double withdrawal_amount = Double.parseDouble(withdrawalAmount);
-        int account_id = Integer.parseInt(accountID);
+            //TODO: GET CURRENT BALANCE:
+            int acc_id = Integer.parseInt(accountID);
+            double withdraw_amount = Double.parseDouble(withdrawalAmount);
 
+
+            currentBalance = accountRepository.getAccountBalance(user.getUser_id(),acc_id);
         //TODO: CHECK IF WITHDRAWAL AMOUNT IS MORE THAN CURRENT BALANCE:
-        if (currentBalance < withdrawal_amount){
-            errorMsg  = "Insufficient Funds";
-            //log failed transaction:
-            transactRepository.logTransaction(account_id,"Withdrawal",withdrawal_amount,"online","failed","Insufficient Funds",currentDateTime);
-            redirectAttributes.addFlashAttribute("error",errorMsg);
-            return "redirect/app/dashboard";
-        }
+        if (currentBalance < withdraw_amount){
 
+            //log failed transaction:
+
+            transactRepository.logTransaction(acc_id,"Withdrawal",withdraw_amount,"online","success","Withdrawal Transaction Successfully",currentDateTime);
+
+            redirectAttributes.addFlashAttribute("failed","Insufficient Funds");
+            return "redirect/app/dashboard";
+
+        }
 
         //TODO: CHECK ZERO VALUES:
-        if (withdrawal_amount == 0){
+            if (withdraw_amount == 0){
 
-            errorMsg  = "withdrawal Amount Cannot Be ZERO, Please Enter a Value Greater than 0 (ZERO)";
-            redirectAttributes.addFlashAttribute("error",errorMsg);
-            return "redirect/app/dashboard";
-        }
+                redirectAttributes.addFlashAttribute("error","Withdraw Amount Cannot Be a ZERO Value");
+                return "redirect/app/dashboard";
+
+            }
 
         //TODO: GET LOGGED IN USER:
 
         user = (User) session.getAttribute("user");
 
-        //TODO: GET CURRENT BALANCE:
-        currentBalance= accountRepository.getAccountBalance(user.getUser_id(),account_id);
-
-        //TODO: SET NEW BALANCE:
-        newBalance = currentBalance - withdrawal_amount;
 
         //TODO: UPDATE ACCOUNT BALANCE:
-        accountRepository.changeAccountBalanceById(newBalance,account_id);
 
-        //log successful transaction:
-        transactRepository.logTransaction(account_id,"Withdrawal",withdrawal_amount,"online","success","Withdrawal Transaction Successfully",currentDateTime);
+            currentBalance = accountRepository.getAccountBalance(user.getUser_id(),acc_id);
 
-        String successMsg  = "withdrawal Amount Successfully";
-        redirectAttributes.addFlashAttribute("success",successMsg);
-        return "redirect/app/dashboard";
+            newBalance = currentBalance - withdraw_amount;
 
-    }
+            //update balance
+            accountRepository.changeAccountBalanceById(newBalance,acc_id);
+
+            //log successful transaction:
+            transactRepository.logTransaction(acc_id,"Withdrawal",withdraw_amount,"online","success","Withdrawal Transaction Successfully",currentDateTime);
+
+            redirectAttributes.addFlashAttribute("success","Amount Withdraw Successfully");
+            return "redirect/app/dashboard";
+
+        }
 
     // End Of Withdraw Method
+
 
     @PostMapping("/payment")
     public String payment(@RequestParam("beneficiary")String beneficiary,

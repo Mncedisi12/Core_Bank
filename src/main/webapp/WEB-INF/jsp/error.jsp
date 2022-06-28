@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/material.css">
 
     <style>
-        *{
+        {
             box-sizing: border-box;
         }
         body{

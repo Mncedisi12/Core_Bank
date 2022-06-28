@@ -3,11 +3,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
         <!-- Card:Payment Card-->
-        <card class=" card payment-card">
+        <card class="card payment-card">
             <!-- Card Body -->
             <div class="card-body">
               <!--Payment Form -->
-                <form action="/transact/payment" method="POST" class="payment-form">
+                <form action="/transact/dashboard" method="POST" class="payment-form">
 
                    <!-- Form Group -->
                     <div class="form-group mb-2">

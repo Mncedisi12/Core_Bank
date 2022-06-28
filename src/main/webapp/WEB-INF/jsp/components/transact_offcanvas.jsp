@@ -20,7 +20,7 @@
             <option value="payment">Payment --</option>
             <option value="transfer">Transfer</option>
             <option value="deposit">Deposit</option>
-<%--            <option value="withdraw">Withdraw</option>--%>
+            <option value="withdraw">Withdraw</option>
         </select>
         <!-- End Of Transaction Type Drop List -->
 

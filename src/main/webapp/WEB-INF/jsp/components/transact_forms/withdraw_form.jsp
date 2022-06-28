@@ -2,6 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+    <link rel="stylesheet" href="../css/main.css">
+    <!-- <link rel="stylesheet" href="../css/default.css"> -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="../js/bootstrap.bundle.js"></script>
+
 <!-- Card:deposit Card-->
 <card class=" card withdraw-card">
     <!-- Card Body -->
@@ -13,7 +18,7 @@
             <!-- Form Group -->
             <div class="form-group mb-2 ">
                 <label for=""> Enter withdrawal Amount</label>
-                <input type="text" name="withdraw_amount" class="form-control" placeholder="Enter withdraw Amount">
+                <input type="text" name="withdrawal_amount" class="form-control" placeholder="Enter withdraw Amount">
 
             </div>
             <!-- End Of Form Group -->
@@ -23,7 +28,7 @@
             <div class="form-group mb-2">
                 <label for="">Select Account</label>
                 <select name="account_id" class="form-control " id="">
-                    <option value="">-- Select Account --</option>
+                    <option value=""> Select Account --</option>
                     <c:if test="${userAccounts != null}">
                         <c:forEach items="${userAccounts}" var="selectAccount">
                             <option value="${selectAccount.account_id}">${selectAccount.account_name}</option>
